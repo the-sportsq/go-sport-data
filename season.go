@@ -12,8 +12,8 @@ type Season struct {
 	IsCurrent int8   `json:"is_current,omitempty" bson:"is_current,omitempty"`
 	CountryId int    `json:"country_id,omitempty" bson:"country_id,omitempty"`
 	LeagueId  int    `json:"league_id,omitempty" bson:"league_id,omitempty"`
-	StartDate Date   `json:"start_date,omitempty" bson:"start_date,omitempty"`
-	EndDate   Date   `json:"end_date,omitempty" bson:"end_date,omitempty"`
+	StartDate string `json:"start_date,omitempty" bson:"start_date,omitempty"`
+	EndDate   string `json:"end_date,omitempty" bson:"end_date,omitempty"`
 }
 
 // Get list of seasons by league_id

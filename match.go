@@ -46,16 +46,16 @@ type Venue struct {
 }
 
 type Match struct {
-	MatchId    int      `json:"match_id,omitempty" bson:"match_id,omitempty"`
-	StatusCode int      `json:"status_code,omitempty" bson:"status_code,omitempty"`
-	Status     string   `json:"status,omitempty" bson:"status,omitempty"`
-	MatchStart DateTime `json:"match_start,omitempty" bson:"match_start,omitempty"`
-	LeagueId   int      `json:"league_id,omitempty" bson:"league_id,omitempty"`
-	SeasonId   int      `json:"season_id,omitempty" bson:"season_id,omitempty"`
-	HomeTeam   *Team    `json:"home_team,omitempty" bson:"home_team,omitempty"`
-	AwayTeam   *Team    `json:"away_team,omitempty" bson:"away_team,omitempty"`
-	Stats      *Stats   `json:"stats,omitempty" bson:"stats,omitempty"`
-	Venue      *Venue   `json:"venue,omitempty" bson:"venue,omitempty"`
+	MatchId    int    `json:"match_id,omitempty" bson:"match_id,omitempty"`
+	StatusCode int    `json:"status_code,omitempty" bson:"status_code,omitempty"`
+	Status     string `json:"status,omitempty" bson:"status,omitempty"`
+	MatchStart string `json:"match_start,omitempty" bson:"match_start,omitempty"`
+	LeagueId   int    `json:"league_id,omitempty" bson:"league_id,omitempty"`
+	SeasonId   int    `json:"season_id,omitempty" bson:"season_id,omitempty"`
+	HomeTeam   *Team  `json:"home_team,omitempty" bson:"home_team,omitempty"`
+	AwayTeam   *Team  `json:"away_team,omitempty" bson:"away_team,omitempty"`
+	Stats      *Stats `json:"stats,omitempty" bson:"stats,omitempty"`
+	Venue      *Venue `json:"venue,omitempty" bson:"venue,omitempty"`
 }
 
 // Get list of matches by season_id

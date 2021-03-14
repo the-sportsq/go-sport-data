@@ -2,7 +2,6 @@ package gsd
 
 import (
 	"errors"
-	"fmt"
 	"os"
 	"testing"
 )
