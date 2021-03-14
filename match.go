@@ -73,7 +73,6 @@ func (c *Client) GetMatches(seasonId int) ([]*Match, error) {
 	defer resp.Body.Close()
 
 	if resp.StatusCode != 200 {
-		fmt.Printf("Recieved bad response %v\n", resp)
 		return nil, errors.New("Received bad status code from API")
 	}
 
