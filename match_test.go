@@ -23,6 +23,23 @@ func TestGetMatches(t *testing.T) {
 	}
 }
 
+func TestGetMatchesForToday(t *testing.T) {
+	apiKey := os.Getenv("SPORT_DATA_API_KEY")
+	client := NewClient(apiKey)
+
+	matches, err := client.GetMatchesForToday(352)
+
+	if err != nil {
+		t.Error(err)
+		return
+	}
+
+	if matches == nil {
+		t.Error(errors.New("Failed to fetch list of matches from API"))
+		return
+	}
+}
+
 func TestGetMatch(t *testing.T) {
 	apiKey := os.Getenv("SPORT_DATA_API_KEY")
 	client := NewClient(apiKey)
