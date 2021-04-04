@@ -66,6 +66,7 @@ type Match struct {
 	StatusCode int    `json:"status_code,omitempty" bson:"status_code,omitempty"`
 	Status     string `json:"status,omitempty" bson:"status,omitempty"`
 	MatchStart string `json:"match_start,omitempty" bson:"match_start,omitempty"`
+	Timestamp  uint64 `json:"timestamp,omitempty" bson:"timestamp,omitempty"`
 	LeagueId   int    `json:"league_id,omitempty" bson:"league_id,omitempty"`
 	SeasonId   int    `json:"season_id,omitempty" bson:"season_id,omitempty"`
 	HomeTeam   *Team  `json:"home_team,omitempty" bson:"home_team,omitempty"`
