@@ -102,13 +102,13 @@ func (c *Client) GetMatches(seasonId int) ([]*Match, error) {
 	return apiResponse.Matches, nil
 }
 
-func getDateString(d *time.Time) string {
+func getDateString(d time.Time) string {
 	year, month, day := d.Date()
 	return fmt.Sprintf("%d-%d-%d", year, month, day)
 }
 
 // Fetch list of matches by season id and date range
-func (c *Client) GetMatchesByDateRange(seasonId int, dateFrom *time.Time, dateTo *time.Time) ([]*Match, error) {
+func (c *Client) GetMatchesByDateRange(seasonId int, dateFrom time.Time, dateTo time.Time) ([]*Match, error) {
 	dateFromStr := getDateString(dateFrom)
 	dateToStr := getDateString(dateTo)
 
@@ -140,7 +140,7 @@ func (c *Client) GetMatchesByDateRange(seasonId int, dateFrom *time.Time, dateTo
 
 // Helper function for fetching list of matches by date range
 // From yesterday to tomorrow
-func (c *Client) GetMatchesForToday(seasonId int) {
+func (c *Client) GetMatchesForToday(seasonId int) ([]*Match, error) {
 	dateFrom := time.Now().AddDate(0, 0, -1)
 	dateTo := time.Now().AddDate(0, 0, 1)
 	return c.GetMatchesByDateRange(seasonId, dateFrom, dateTo)
