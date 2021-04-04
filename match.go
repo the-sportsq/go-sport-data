@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"time"
 )
 
 const (
@@ -99,6 +100,50 @@ func (c *Client) GetMatches(seasonId int) ([]*Match, error) {
 	}
 
 	return apiResponse.Matches, nil
+}
+
+func getDateString(d *time.Time) string {
+	year, month, day := d.Date()
+	return fmt.Sprintf("%d-%d-%d", year, month, day)
+}
+
+// Fetch list of matches by season id and date range
+func (c *Client) GetMatchesByDateRange(seasonId int, dateFrom *time.Time, dateTo *time.Time) ([]*Match, error) {
+	dateFromStr := getDateString(dateFrom)
+	dateToStr := getDateString(dateTo)
+
+	type response struct {
+		Matches []*Match `json:"data,omitempty"`
+	}
+
+	path := fmt.Sprintf("/soccer/matches/?season_id=%d&date_from=%s&date_to=%s", seasonId, dateFromStr, dateToStr)
+
+	resp, err := c.MakeRequest("GET", path, nil)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != 200 {
+		return nil, errors.New("Received bad status code from API")
+	}
+
+	var apiResponse *response
+
+	decoder := json.NewDecoder(resp.Body)
+	if err = decoder.Decode(&apiResponse); err != nil {
+		return nil, err
+	}
+
+	return apiResponse.Matches, nil
+}
+
+// Helper function for fetching list of matches by date range
+// From yesterday to tomorrow
+func (c *Client) GetMatchesForToday(seasonId int) {
+	dateFrom := time.Now().AddDate(0, 0, -1)
+	dateTo := time.Now().AddDate(0, 0, 1)
+	return c.GetMatchesByDateRange(seasonId, dateFrom, dateTo)
 }
 
 // Get individual match by match_id
