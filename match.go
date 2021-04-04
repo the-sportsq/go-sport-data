@@ -28,6 +28,21 @@ const (
 	MATCH_TO_BE_ANNOUNCED  = 17
 )
 
+var MatchInProgressStatuses []int = []int{
+	MATCH_INPLAY,
+	MATCH_HALF_TIME,
+	MATCH_EXTRA_TIME,
+	MATCH_PENALTIES,
+	MATCH_BREAK_TIME,
+	MATCH_AWARDING,
+}
+
+var MatchEndedStatuses []int = []int{
+	MATCH_ENDED,
+	MATCH_AFTER_PENALTIES,
+	MATCH_AFTER_EXTRA_TIME,
+}
+
 type Stats struct {
 	HomeScore int    `json:"home_score,omitempty" bson:"home_score,omitempty"`
 	AwayScore int    `json:"away_score,omitempty" bson:"away_score,omitempty"`
