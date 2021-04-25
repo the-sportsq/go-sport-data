@@ -74,6 +74,10 @@ type Match struct {
 	AwayTeam   *Team  `json:"away_team,omitempty" bson:"away_team,omitempty"`
 	Stats      *Stats `json:"stats,omitempty" bson:"stats,omitempty"`
 	Venue      *Venue `json:"venue,omitempty" bson:"venue,omitempty"`
+
+	// SportsQ Properties
+	MatchEnd     string `json:"match_end,omitempty" bson:"match_end,omitempty"`
+	RewardsGiven bool   `json:"rewards_given,omitempty" bson:"rewards_given,omitempty"`
 }
 
 // Get list of matches by season_id
