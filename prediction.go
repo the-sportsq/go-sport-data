@@ -7,8 +7,8 @@ const (
 )
 
 type Prediction struct {
-	UserId   int `json:"user_id,omitempty" bson:"user_id,omitempty"`
-	MatchId  int `json:"match_id,omitempty" bson:"match_id,omitempty"`
-	LeagueId int `json:"league_id,omitempty" bson:"league_id,omitempty"`
-	Choice   int `json:"choice,omitempty" bson:"choice,omitempty"`
+	UserId   string `json:"user_id,omitempty" bson:"user_id,omitempty"`
+	MatchId  int    `json:"match_id,omitempty" bson:"match_id,omitempty"`
+	LeagueId int    `json:"league_id,omitempty" bson:"league_id,omitempty"`
+	Choice   int    `json:"choice,omitempty" bson:"choice,omitempty"`
 }
