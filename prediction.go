@@ -10,5 +10,5 @@ type Prediction struct {
 	UserId   string `json:"user_id,omitempty" bson:"user_id,omitempty"`
 	MatchId  int    `json:"match_id,omitempty" bson:"match_id,omitempty"`
 	LeagueId int    `json:"league_id,omitempty" bson:"league_id,omitempty"`
-	Choice   int    `json:"choice,omitempty" bson:"choice,omitempty"`
+	Choice   int    `json:"choice" bson:"choice,omitempty"`
 }
