@@ -131,7 +131,7 @@ func (c *Client) GetMatchesByDateRange(seasonId int, dateFrom time.Time, dateTo 
 	defer resp.Body.Close()
 
 	if resp.StatusCode != 200 {
-		return nil, errors.New("Received bad status code from API")
+		return nil, errors.New(fmt.Sprintf("Received bad status code from API (%v)", resp.StatusCode))
 	}
 
 	var apiResponse *response

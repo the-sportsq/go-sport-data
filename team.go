@@ -18,6 +18,7 @@ type Team struct {
 	Name      string   `json:"name,omitempty" bson:"name,omitempty"`
 	ShortCode string   `json:"short_code,omitempty" bson:"short_code,omitempty"`
 	Country   *Country `json:"country,omitempty" bson:"country,omitempty"`
+	Logo      string   `json:"logo,omitempty" bson:"logo,omitempty"`
 }
 
 // Get list of teams by country_id
