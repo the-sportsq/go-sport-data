@@ -7,14 +7,14 @@ import (
 )
 
 type Country struct {
-	CountryId   int    `json:"country_id,omitempty" bson:"country_id,omitempty"`
+	CountryID   int    `json:"country_id,omitempty" bson:"country_id,omitempty"`
 	Name        string `json:"name,omitempty" bson:"name,omitempty"`
 	CountryCode string `json:"country_code,omitempty" bson:"country_code,omitempty"`
 	Continent   string `json:"continent,omitempty" bson:"continent,omitempty"`
 }
 
 type Team struct {
-	TeamId    int      `json:"team_id,omitempty" bson:"team_id,omitempty"`
+	TeamID    int      `json:"team_id,omitempty" bson:"team_id,omitempty"`
 	Name      string   `json:"name,omitempty" bson:"name,omitempty"`
 	ShortCode string   `json:"short_code,omitempty" bson:"short_code,omitempty"`
 	Country   *Country `json:"country,omitempty" bson:"country,omitempty"`
@@ -22,14 +22,14 @@ type Team struct {
 }
 
 type Standings struct {
-	SeasonId  int        `json:"season_id,omitempty" bson:"season_id,omitempty"`
-	LeagueId  int        `json:"league_id,omitempty" bson:"league_id,omitempty"`
+	SeasonID  int        `json:"season_id,omitempty" bson:"season_id,omitempty"`
+	LeagueID  int        `json:"league_id,omitempty" bson:"league_id,omitempty"`
 	hasGroups bool       `json:"has_groups,omitempty" bson:"has_groups,omitempty"`
 	Standings []Standing `json:"standings,omitempty" bson:"standings,omitempty"`
 }
 
 type Standing struct {
-	TeamId   int    `json:"team_id,omitempty" bson:"team_id,omitempty"`
+	TeamID   int    `json:"team_id,omitempty" bson:"team_id,omitempty"`
 	Position int    `json:"position,omitempty" bson:"position,omitempty"`
 	Points   int    `json:"points,omitempty" bson:"points,omitempty"`
 	Status   string `json:"status,omitempty" bson:"status,omitempty"`
@@ -51,12 +51,12 @@ type StandingStats struct {
 }
 
 // Get list of teams by country_id
-func (c *Client) GetTeams(countryId int) ([]*Team, error) {
+func (c *Client) GetTeams(countryID int) ([]*Team, error) {
 	type response struct {
 		Teams []*Team `json:"data,omitempty"`
 	}
 
-	path := fmt.Sprintf("/soccer/teams/?country_id=%d", countryId)
+	path := fmt.Sprintf("/soccer/teams/?country_id=%d", countryID)
 
 	resp, err := c.MakeRequest("GET", path, nil)
 	if err != nil {
@@ -107,12 +107,12 @@ func (c *Client) GetTeam(id int) (*Team, error) {
 }
 
 // Get full league standings by season ID
-func (c *Client) GetStandings(seasonId int) (*Standings, error) {
+func (c *Client) GetStandings(seasonID int) (*Standings, error) {
 	type response struct {
 		Data *Standings `json:"data"`
 	}
 
-	path := fmt.Sprintf("/soccer/standings?season_id=%v", seasonId)
+	path := fmt.Sprintf("/soccer/standings?season_id=%v", seasonID)
 
 	resp, err := c.MakeRequest("GET", path, nil)
 	if err != nil {

@@ -14,14 +14,14 @@ type Odds struct {
 }
 
 type Bookmaker struct {
-	BookmakerId int        `json:"bookmaker_id,omitempty" bson:"bookmaker_id,omitempty"`
+	BookmakerID int        `json:"bookmaker_id,omitempty" bson:"bookmaker_id,omitempty"`
 	Name        string     `json:"bookmaker_name,omitempty" bson:"bookmaker_name,omitempty"`
 	LastUpdated *time.Time `json:"last_updated,omitempty" bson:"last_updated,omitempty"`
 	Odds        *Odds      `json:"odds_data,omitempty" bson:"odds_data,omitempty"`
 }
 
 // Get list of bookmakers by match_id
-func (c *Client) GetOdds(matchId int) ([]*Bookmaker, error) {
+func (c *Client) GetOdds(matchID int) ([]*Bookmaker, error) {
 	// Have to use a janky map here because api returns JSON with commas in the keys
 	type response struct {
 		Data map[string]struct {
@@ -29,7 +29,7 @@ func (c *Client) GetOdds(matchId int) ([]*Bookmaker, error) {
 		} `json:"data,omitempty"`
 	}
 
-	path := fmt.Sprintf("/soccer/odds/%d?type=prematch", matchId)
+	path := fmt.Sprintf("/soccer/odds/%d?type=prematch", matchID)
 
 	resp, err := c.MakeRequest("GET", path, nil)
 	if err != nil {

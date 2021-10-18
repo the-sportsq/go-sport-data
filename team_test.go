@@ -55,7 +55,7 @@ func TestGetStandings(t *testing.T) {
 
 	standing := data.Standings[0]
 
-	if standing.TeamId != 12400 {
+	if standing.TeamID != 12400 {
 		t.Error(errors.New("Unexpected data returned from API for standings"))
 	}
 }

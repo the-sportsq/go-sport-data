@@ -1,5 +1,9 @@
 package gsd
 
+import (
+	"go.mongodb.org/mongo-driver/bson/primitive"
+)
+
 const (
 	PREDICTION_CHOICE_HOME = 0
 	PREDICTION_CHOICE_AWAY = 1
@@ -7,8 +11,8 @@ const (
 )
 
 type Prediction struct {
-	UserId   string `json:"user_id,omitempty" bson:"user_id,omitempty"`
-	MatchId  int    `json:"match_id,omitempty" bson:"match_id,omitempty"`
-	LeagueId int    `json:"league_id,omitempty" bson:"league_id,omitempty"`
-	Choice   int    `json:"choice" bson:"choice,omitempty"`
+	UserID   primitive.ObjectID `json:"user_id,omitempty" bson:"user_id,omitempty"`
+	MatchID  int                `json:"match_id,omitempty" bson:"match_id,omitempty"`
+	LeagueID int                `json:"league_id,omitempty" bson:"league_id,omitempty"`
+	Choice   int                `json:"choice" bson:"choice,omitempty"`
 }

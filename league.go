@@ -7,8 +7,8 @@ import (
 )
 
 type League struct {
-	LeagueId  int    `json:"league_id,omitempty" bson:"league_id,omitempty"`
-	CountryId int    `json:"country_id,omitempty" bson:"country_id,omitempty"`
+	LeagueID  int    `json:"league_id,omitempty" bson:"league_id,omitempty"`
+	CountryID int    `json:"country_id,omitempty" bson:"country_id,omitempty"`
 	Name      string `json:"name,omitempty" bson:"name,omitempty"`
 	Active    bool   `json:"active,omitempty" bson:"active,omitempty"`
 }

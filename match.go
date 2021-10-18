@@ -54,22 +54,22 @@ type Stats struct {
 }
 
 type Venue struct {
-	VenueId   int    `json:"venue_id,omitempty" bson:"venue_id,omitempty"`
+	VenueID   int    `json:"venue_id,omitempty" bson:"venue_id,omitempty"`
 	Name      string `json:"name,omitempty" bson:"name,omitempty"`
 	Capacity  int    `json:"capacity,omitempty" bson:"capacity,omitempty"`
 	City      string `json:"city,omitempty" bson:"city,omitempty"`
-	CountryId int    `json:"country_id,omitempty" bson:"country_id,omitempty"`
+	CountryID int    `json:"country_id,omitempty" bson:"country_id,omitempty"`
 }
 
 type Match struct {
-	MatchId    int    `json:"match_id,omitempty" bson:"match_id,omitempty"`
+	MatchID    int    `json:"match_id,omitempty" bson:"match_id,omitempty"`
 	StatusCode int    `json:"status_code,omitempty" bson:"status_code,omitempty"`
 	Status     string `json:"status,omitempty" bson:"status,omitempty"`
 	MatchStart string `json:"match_start,omitempty" bson:"match_start,omitempty"`
 	Timestamp  uint64 `json:"timestamp,omitempty" bson:"timestamp,omitempty"`
 	Minute     int    `json:"minute,omitempty" bson:"minute,omitempty"`
-	LeagueId   int    `json:"league_id,omitempty" bson:"league_id,omitempty"`
-	SeasonId   int    `json:"season_id,omitempty" bson:"season_id,omitempty"`
+	LeagueID   int    `json:"league_id,omitempty" bson:"league_id,omitempty"`
+	SeasonID   int    `json:"season_id,omitempty" bson:"season_id,omitempty"`
 	HomeTeam   *Team  `json:"home_team,omitempty" bson:"home_team,omitempty"`
 	AwayTeam   *Team  `json:"away_team,omitempty" bson:"away_team,omitempty"`
 	Stats      *Stats `json:"stats,omitempty" bson:"stats,omitempty"`
@@ -81,12 +81,12 @@ type Match struct {
 }
 
 // Get list of matches by season_id
-func (c *Client) GetMatches(seasonId int) ([]*Match, error) {
+func (c *Client) GetMatches(seasonID int) ([]*Match, error) {
 	type response struct {
 		Matches []*Match `json:"data,omitempty"`
 	}
 
-	path := fmt.Sprintf("/soccer/matches/?season_id=%d", seasonId)
+	path := fmt.Sprintf("/soccer/matches/?season_id=%d", seasonID)
 
 	resp, err := c.MakeRequest("GET", path, nil)
 	if err != nil {
@@ -114,7 +114,7 @@ func getDateString(d time.Time) string {
 }
 
 // Fetch list of matches by season id and date range
-func (c *Client) GetMatchesByDateRange(seasonId int, dateFrom time.Time, dateTo time.Time) ([]*Match, error) {
+func (c *Client) GetMatchesByDateRange(seasonID int, dateFrom time.Time, dateTo time.Time) ([]*Match, error) {
 	dateFromStr := getDateString(dateFrom)
 	dateToStr := getDateString(dateTo)
 
@@ -122,7 +122,7 @@ func (c *Client) GetMatchesByDateRange(seasonId int, dateFrom time.Time, dateTo 
 		Matches []*Match `json:"data,omitempty"`
 	}
 
-	path := fmt.Sprintf("/soccer/matches/?season_id=%d&date_from=%s&date_to=%s", seasonId, dateFromStr, dateToStr)
+	path := fmt.Sprintf("/soccer/matches/?season_id=%d&date_from=%s&date_to=%s", seasonID, dateFromStr, dateToStr)
 
 	resp, err := c.MakeRequest("GET", path, nil)
 	if err != nil {
@@ -131,6 +131,11 @@ func (c *Client) GetMatchesByDateRange(seasonId int, dateFrom time.Time, dateTo 
 	defer resp.Body.Close()
 
 	if resp.StatusCode != 200 {
+		if resp.StatusCode == 403 {
+			// API returns 403 when there's no results for some reason
+			return make([]*Match, 0), nil
+		}
+
 		return nil, errors.New(fmt.Sprintf("Received bad status code from API (%v)", resp.StatusCode))
 	}
 
@@ -146,10 +151,10 @@ func (c *Client) GetMatchesByDateRange(seasonId int, dateFrom time.Time, dateTo 
 
 // Helper function for fetching list of matches by date range
 // From yesterday to tomorrow
-func (c *Client) GetMatchesForToday(seasonId int) ([]*Match, error) {
+func (c *Client) GetMatchesForToday(seasonID int) ([]*Match, error) {
 	dateFrom := time.Now().AddDate(0, 0, -1)
 	dateTo := time.Now().AddDate(0, 0, 1)
-	return c.GetMatchesByDateRange(seasonId, dateFrom, dateTo)
+	return c.GetMatchesByDateRange(seasonID, dateFrom, dateTo)
 }
 
 // Get individual match by match_id
