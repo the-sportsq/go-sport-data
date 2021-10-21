@@ -14,12 +14,21 @@ type League struct {
 }
 
 // Get list of leagues
-func (c *Client) GetLeagues() ([]*League, error) {
-	type response struct {
-		Leagues []*League `json:"data,omitempty"`
+// GetLeagues fetches a list of leagues the API is subscribed to
+// You can also provide a country_id to further filter the list
+func (c *Client) GetLeagues(countryID ...int) ([]*League, error) {
+	query := Query{
+		"subscribed": true,
 	}
 
-	resp, err := c.MakeRequest("GET", "/soccer/leagues", nil)
+	if len(countryID) > 0 {
+		query = Query{
+			"country_id": countryID[0],
+		}
+	}
+
+	path := getPath("/soccer/leagues", query)
+	resp, err := c.MakeRequest("GET", path, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -29,14 +38,40 @@ func (c *Client) GetLeagues() ([]*League, error) {
 		return nil, errors.New("Received bad status code from API")
 	}
 
-	var apiResponse *response
+	var leagues []*League
 
-	decoder := json.NewDecoder(resp.Body)
-	if err = decoder.Decode(&apiResponse); err != nil {
-		return nil, err
+	if len(countryID) > 0 {
+		// Whenever country_id is provided to API, data is a map instead of array
+		// Not sure why they wanted to be weird with it
+		type Response struct {
+			Leagues map[int]*League `json:"data,omitempty"`
+		}
+
+		var response *Response
+		decoder := json.NewDecoder(resp.Body)
+		if err = decoder.Decode(&response); err != nil {
+			return nil, err
+		}
+
+		for _, v := range response.Leagues {
+			leagues = append(leagues, v)
+		}
+	} else {
+		// Read data as array, as expected
+		type Response struct {
+			Leagues []*League `json:"data,omitempty"`
+		}
+
+		var response *Response
+		decoder := json.NewDecoder(resp.Body)
+		if err = decoder.Decode(&response); err != nil {
+			return nil, err
+		}
+
+		leagues = response.Leagues
 	}
 
-	return apiResponse.Leagues, nil
+	return leagues, nil
 }
 
 // Get a single league by league_id

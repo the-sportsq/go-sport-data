@@ -21,7 +21,7 @@ type Bookmaker struct {
 }
 
 // Get list of bookmakers by match_id
-func (c *Client) GetOdds(matchID int) ([]*Bookmaker, error) {
+func (c *Client) GetOdds(matchID int, oddsType ...string) ([]*Bookmaker, error) {
 	// Have to use a janky map here because api returns JSON with commas in the keys
 	type response struct {
 		Data map[string]struct {
@@ -29,7 +29,14 @@ func (c *Client) GetOdds(matchID int) ([]*Bookmaker, error) {
 		} `json:"data,omitempty"`
 	}
 
-	path := fmt.Sprintf("/soccer/odds/%d?type=prematch", matchID)
+	query := Query{}
+	if len(oddsType) > 0 {
+		query["type"] = oddsType[0]
+	} else {
+		query["type"] = "prematch"
+	}
+
+	path := getPath(fmt.Sprintf("/soccer/odds/%d", matchID), query)
 
 	resp, err := c.MakeRequest("GET", path, nil)
 	if err != nil {

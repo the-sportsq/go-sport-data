@@ -53,14 +53,6 @@ type Stats struct {
 	PSScore   string `json:"ps_score,omitempty" bson:"ps_score,omitempty"`
 }
 
-type Venue struct {
-	VenueID   int    `json:"venue_id,omitempty" bson:"venue_id,omitempty"`
-	Name      string `json:"name,omitempty" bson:"name,omitempty"`
-	Capacity  int    `json:"capacity,omitempty" bson:"capacity,omitempty"`
-	City      string `json:"city,omitempty" bson:"city,omitempty"`
-	CountryID int    `json:"country_id,omitempty" bson:"country_id,omitempty"`
-}
-
 type Match struct {
 	MatchID    int    `json:"match_id,omitempty" bson:"match_id,omitempty"`
 	StatusCode int    `json:"status_code,omitempty" bson:"status_code,omitempty"`

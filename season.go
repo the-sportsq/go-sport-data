@@ -22,7 +22,9 @@ func (c *Client) GetSeasons(leagueID int) ([]*Season, error) {
 		Seasons []*Season `json:"data,omitempty"`
 	}
 
-	path := fmt.Sprintf("/soccer/seasons/?league_id=%d", leagueID)
+	path := getPath("/soccer/seasons/", Query{
+		"league_id": leagueID,
+	})
 
 	resp, err := c.MakeRequest("GET", path, nil)
 	if err != nil {

@@ -4,11 +4,14 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"net/url"
 )
 
 type Client struct {
 	ApiKey string
 }
+
+type Query map[string]interface{}
 
 const BaseApiUrl string = "https://app.sportdataapi.com/api/v1"
 
@@ -16,6 +19,19 @@ func NewClient(apiKey string) *Client {
 	return &Client{
 		ApiKey: apiKey,
 	}
+}
+
+// getPath formats a path and query params in preparation for a request
+func getPath(path string, query Query) string {
+	p, _ := url.Parse(path)
+	q := p.Query()
+
+	for k, v := range query {
+		q.Set(k, fmt.Sprintf("%v", v))
+	}
+
+	p.RawQuery = q.Encode()
+	return p.RequestURI()
 }
 
 func getUrl(path string) string {
